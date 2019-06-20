@@ -1,0 +1,994 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CampaignModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Campaign">
+          <Key>
+            <PropertyRef Name="CampaignId" />
+          </Key>
+          <Property Name="CampaignId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CampaignName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ReferenceId" Type="int" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Level" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="VideoLink" Type="int" />
+          <Property Name="VideoDetails" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CampaignRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CampaignUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Department" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="15" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ClientType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="500" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Campaign.dbo.ClientLicense' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ClientLicense">
+          <Key>
+            <PropertyRef Name="LicenseId" />
+            <PropertyRef Name="ClientId" />
+            <PropertyRef Name="ActiveDate" />
+            <PropertyRef Name="ExpiryDate" />
+          </Key>
+          <Property Name="LicenseId" Type="int" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="ActiveDate" Type="datetime" Nullable="false" />
+          <Property Name="ExpiryDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="License">
+          <Key>
+            <PropertyRef Name="LicenseId" />
+          </Key>
+          <Property Name="LicenseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LicenseName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PublishedCampaign">
+          <Key>
+            <PropertyRef Name="PublishId" />
+          </Key>
+          <Property Name="PublishId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CampaignId" Type="int" Nullable="false" />
+          <Property Name="GroupId" Type="int" />
+          <Property Name="PublishedBy" Type="int" Nullable="false" />
+          <Property Name="PublishedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Survey">
+          <Key>
+            <PropertyRef Name="SurveyId" />
+          </Key>
+          <Property Name="SurveyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="CampaignId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SurveyQuestions">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Choice1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Choice2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Choice3" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Choice4" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Answer" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserCampaigns">
+          <Key>
+            <PropertyRef Name="UserCampaignId" />
+          </Key>
+          <Property Name="UserCampaignId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CampaignId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="ViewDate" Type="datetime" />
+          <Property Name="VideoWatched" Type="bit" />
+          <Property Name="VideoTime" Type="time" Precision="7" />
+          <Property Name="VideoDate" Type="datetime" />
+          <Property Name="CompletedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserQuestionDetails">
+          <Key>
+            <PropertyRef Name="DetailId" />
+          </Key>
+          <Property Name="DetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SelectedChoice" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsCorrect" Type="bit" />
+          <Property Name="TimeTaken" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="Video">
+          <Key>
+            <PropertyRef Name="VideoId" />
+          </Key>
+          <Property Name="VideoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VideoName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="VideoPath" Type="nvarchar" MaxLength="2000" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="1000" />
+          <Property Name="VideoLength" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Campaign_Video">
+          <End Role="Video" Type="Self.Video" Multiplicity="0..1" />
+          <End Role="Campaign" Type="Self.Campaign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Video">
+              <PropertyRef Name="VideoId" />
+            </Principal>
+            <Dependent Role="Campaign">
+              <PropertyRef Name="VideoLink" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CampaignUser_CampaignRole">
+          <End Role="CampaignRole" Type="Self.CampaignRole" Multiplicity="1" />
+          <End Role="CampaignUser" Type="Self.CampaignUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaignRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="CampaignUser">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CampaignUser_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="1" />
+          <End Role="CampaignUser" Type="Self.CampaignUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="CampaignUser">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PublishedCampaign_Campaign">
+          <End Role="Campaign" Type="Self.Campaign" Multiplicity="1" />
+          <End Role="PublishedCampaign" Type="Self.PublishedCampaign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campaign">
+              <PropertyRef Name="CampaignId" />
+            </Principal>
+            <Dependent Role="PublishedCampaign">
+              <PropertyRef Name="CampaignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PublishedCampaign_CampaignUser">
+          <End Role="CampaignUser" Type="Self.CampaignUser" Multiplicity="1" />
+          <End Role="PublishedCampaign" Type="Self.PublishedCampaign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaignUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="PublishedCampaign">
+              <PropertyRef Name="PublishedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PublishedCampaign_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="PublishedCampaign" Type="Self.PublishedCampaign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="PublishedCampaign">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Survey_Campaign">
+          <End Role="Campaign" Type="Self.Campaign" Multiplicity="1" />
+          <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campaign">
+              <PropertyRef Name="CampaignId" />
+            </Principal>
+            <Dependent Role="Survey">
+              <PropertyRef Name="CampaignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SurveyQuestions_Survey">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
+          <End Role="SurveyQuestions" Type="Self.SurveyQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="SurveyQuestions">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCampaigns_Campaign">
+          <End Role="Campaign" Type="Self.Campaign" Multiplicity="1" />
+          <End Role="UserCampaigns" Type="Self.UserCampaigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campaign">
+              <PropertyRef Name="CampaignId" />
+            </Principal>
+            <Dependent Role="UserCampaigns">
+              <PropertyRef Name="CampaignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCampaigns_CampaignUser">
+          <End Role="CampaignUser" Type="Self.CampaignUser" Multiplicity="1" />
+          <End Role="UserCampaigns" Type="Self.UserCampaigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaignUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserCampaigns">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCampaigns_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="1" />
+          <End Role="UserCampaigns" Type="Self.UserCampaigns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="UserCampaigns">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserQuestionDetails_CampaignUser">
+          <End Role="CampaignUser" Type="Self.CampaignUser" Multiplicity="1" />
+          <End Role="UserQuestionDetails" Type="Self.UserQuestionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaignUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserQuestionDetails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserQuestionDetails_SurveyQuestions">
+          <End Role="SurveyQuestions" Type="Self.SurveyQuestions" Multiplicity="1" />
+          <End Role="UserQuestionDetails" Type="Self.UserQuestionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveyQuestions">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="UserQuestionDetails">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CampaignModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Campaign" EntityType="Self.Campaign" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CampaignRole" EntityType="Self.CampaignRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CampaignUser" EntityType="Self.CampaignUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="License" EntityType="Self.License" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PublishedCampaign" EntityType="Self.PublishedCampaign" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Survey" EntityType="Self.Survey" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SurveyQuestions" EntityType="Self.SurveyQuestions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserCampaigns" EntityType="Self.UserCampaigns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserQuestionDetails" EntityType="Self.UserQuestionDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Video" EntityType="Self.Video" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientLicense" EntityType="Self.ClientLicense" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ClientLicense].[LicenseId] AS [LicenseId], 
+    [ClientLicense].[ClientId] AS [ClientId], 
+    [ClientLicense].[ActiveDate] AS [ActiveDate], 
+    [ClientLicense].[ExpiryDate] AS [ExpiryDate]
+    FROM [dbo].[ClientLicense] AS [ClientLicense]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Campaign_Video" Association="Self.FK_Campaign_Video">
+            <End Role="Video" EntitySet="Video" />
+            <End Role="Campaign" EntitySet="Campaign" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CampaignUser_CampaignRole" Association="Self.FK_CampaignUser_CampaignRole">
+            <End Role="CampaignRole" EntitySet="CampaignRole" />
+            <End Role="CampaignUser" EntitySet="CampaignUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CampaignUser_Group" Association="Self.FK_CampaignUser_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="CampaignUser" EntitySet="CampaignUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PublishedCampaign_Campaign" Association="Self.FK_PublishedCampaign_Campaign">
+            <End Role="Campaign" EntitySet="Campaign" />
+            <End Role="PublishedCampaign" EntitySet="PublishedCampaign" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PublishedCampaign_CampaignUser" Association="Self.FK_PublishedCampaign_CampaignUser">
+            <End Role="CampaignUser" EntitySet="CampaignUser" />
+            <End Role="PublishedCampaign" EntitySet="PublishedCampaign" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PublishedCampaign_Group" Association="Self.FK_PublishedCampaign_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="PublishedCampaign" EntitySet="PublishedCampaign" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Survey_Campaign" Association="Self.FK_Survey_Campaign">
+            <End Role="Campaign" EntitySet="Campaign" />
+            <End Role="Survey" EntitySet="Survey" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SurveyQuestions_Survey" Association="Self.FK_SurveyQuestions_Survey">
+            <End Role="Survey" EntitySet="Survey" />
+            <End Role="SurveyQuestions" EntitySet="SurveyQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCampaigns_Campaign" Association="Self.FK_UserCampaigns_Campaign">
+            <End Role="Campaign" EntitySet="Campaign" />
+            <End Role="UserCampaigns" EntitySet="UserCampaigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCampaigns_CampaignUser" Association="Self.FK_UserCampaigns_CampaignUser">
+            <End Role="CampaignUser" EntitySet="CampaignUser" />
+            <End Role="UserCampaigns" EntitySet="UserCampaigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCampaigns_Group" Association="Self.FK_UserCampaigns_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="UserCampaigns" EntitySet="UserCampaigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserQuestionDetails_CampaignUser" Association="Self.FK_UserQuestionDetails_CampaignUser">
+            <End Role="CampaignUser" EntitySet="CampaignUser" />
+            <End Role="UserQuestionDetails" EntitySet="UserQuestionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserQuestionDetails_SurveyQuestions" Association="Self.FK_UserQuestionDetails_SurveyQuestions">
+            <End Role="SurveyQuestions" EntitySet="SurveyQuestions" />
+            <End Role="UserQuestionDetails" EntitySet="UserQuestionDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CampaignModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CampaignEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="CampaignModel.C__MigrationHistory" />
+          <EntitySet Name="Campaigns" EntityType="CampaignModel.Campaign" />
+          <EntitySet Name="CampaignRoles" EntityType="CampaignModel.CampaignRole" />
+          <EntitySet Name="CampaignUsers" EntityType="CampaignModel.CampaignUser" />
+          <EntitySet Name="Clients" EntityType="CampaignModel.Client" />
+          <EntitySet Name="Groups" EntityType="CampaignModel.Group" />
+          <EntitySet Name="Licenses" EntityType="CampaignModel.License" />
+          <EntitySet Name="Surveys" EntityType="CampaignModel.Survey" />
+          <EntitySet Name="SurveyQuestions" EntityType="CampaignModel.SurveyQuestion" />
+          <EntitySet Name="ClientLicenses" EntityType="CampaignModel.ClientLicense" />
+          <AssociationSet Name="FK_Survey_Campaign" Association="CampaignModel.FK_Survey_Campaign">
+            <End Role="Campaign" EntitySet="Campaigns" />
+            <End Role="Survey" EntitySet="Surveys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CampaignUser_CampaignRole" Association="CampaignModel.FK_CampaignUser_CampaignRole">
+            <End Role="CampaignRole" EntitySet="CampaignRoles" />
+            <End Role="CampaignUser" EntitySet="CampaignUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CampaignUser_Group" Association="CampaignModel.FK_CampaignUser_Group">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="CampaignUser" EntitySet="CampaignUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SurveyQuestions_Survey" Association="CampaignModel.FK_SurveyQuestions_Survey">
+            <End Role="Survey" EntitySet="Surveys" />
+            <End Role="SurveyQuestion" EntitySet="SurveyQuestions" />
+          </AssociationSet>
+          <EntitySet Name="PublishedCampaigns" EntityType="CampaignModel.PublishedCampaign" />
+          <AssociationSet Name="FK_PublishedCampaign_Campaign" Association="CampaignModel.FK_PublishedCampaign_Campaign">
+            <End Role="Campaign" EntitySet="Campaigns" />
+            <End Role="PublishedCampaign" EntitySet="PublishedCampaigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PublishedCampaign_CampaignUser" Association="CampaignModel.FK_PublishedCampaign_CampaignUser">
+            <End Role="CampaignUser" EntitySet="CampaignUsers" />
+            <End Role="PublishedCampaign" EntitySet="PublishedCampaigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PublishedCampaign_Group" Association="CampaignModel.FK_PublishedCampaign_Group">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="PublishedCampaign" EntitySet="PublishedCampaigns" />
+          </AssociationSet>
+          <EntitySet Name="UserQuestionDetails" EntityType="CampaignModel.UserQuestionDetail" />
+          <AssociationSet Name="FK_UserQuestionDetails_CampaignUser" Association="CampaignModel.FK_UserQuestionDetails_CampaignUser">
+            <End Role="CampaignUser" EntitySet="CampaignUsers" />
+            <End Role="UserQuestionDetail" EntitySet="UserQuestionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserQuestionDetails_SurveyQuestions" Association="CampaignModel.FK_UserQuestionDetails_SurveyQuestions">
+            <End Role="SurveyQuestion" EntitySet="SurveyQuestions" />
+            <End Role="UserQuestionDetail" EntitySet="UserQuestionDetails" />
+          </AssociationSet>
+          <EntitySet Name="UserCampaigns" EntityType="CampaignModel.UserCampaign" />
+          <AssociationSet Name="FK_UserCampaigns_Campaign" Association="CampaignModel.FK_UserCampaigns_Campaign">
+            <End Role="Campaign" EntitySet="Campaigns" />
+            <End Role="UserCampaign" EntitySet="UserCampaigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCampaigns_CampaignUser" Association="CampaignModel.FK_UserCampaigns_CampaignUser">
+            <End Role="CampaignUser" EntitySet="CampaignUsers" />
+            <End Role="UserCampaign" EntitySet="UserCampaigns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCampaigns_Group" Association="CampaignModel.FK_UserCampaigns_Group">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="UserCampaign" EntitySet="UserCampaigns" />
+          </AssociationSet>
+          <EntitySet Name="Videos" EntityType="CampaignModel.Video" />
+          <AssociationSet Name="FK_Campaign_Video" Association="CampaignModel.FK_Campaign_Video">
+            <End Role="Video" EntitySet="Videos" />
+            <End Role="Campaign" EntitySet="Campaigns" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Campaign">
+          <Key>
+            <PropertyRef Name="CampaignId" />
+          </Key>
+          <Property Name="CampaignId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CampaignName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ReferenceId" Type="Int32" Nullable="false" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Level" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="VideoLink" Type="Int32" />
+          <Property Name="VideoDetails" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Surveys" Relationship="CampaignModel.FK_Survey_Campaign" FromRole="Campaign" ToRole="Survey" />
+          <NavigationProperty Name="Video" Relationship="CampaignModel.FK_Campaign_Video" FromRole="Campaign" ToRole="Video" />
+        </EntityType>
+        <EntityType Name="CampaignRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CampaignUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CampaignRole" Relationship="CampaignModel.FK_CampaignUser_CampaignRole" FromRole="CampaignUser" ToRole="CampaignRole" />
+          <NavigationProperty Name="Group" Relationship="CampaignModel.FK_CampaignUser_Group" FromRole="CampaignUser" ToRole="Group" />
+          <NavigationProperty Name="PublishedCampaigns" Relationship="CampaignModel.FK_PublishedCampaign_CampaignUser" FromRole="CampaignUser" ToRole="PublishedCampaign" />
+          <NavigationProperty Name="UserQuestionDetails" Relationship="CampaignModel.FK_UserQuestionDetails_CampaignUser" FromRole="CampaignUser" ToRole="UserQuestionDetail" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ClientType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserCampaigns" Relationship="CampaignModel.FK_UserCampaigns_Group" FromRole="Group" ToRole="UserCampaign" />
+        </EntityType>
+        <EntityType Name="License">
+          <Key>
+            <PropertyRef Name="LicenseId" />
+          </Key>
+          <Property Name="LicenseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LicenseName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Survey">
+          <Key>
+            <PropertyRef Name="SurveyId" />
+          </Key>
+          <Property Name="SurveyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CampaignId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="SurveyQuestions" Relationship="CampaignModel.FK_SurveyQuestions_Survey" FromRole="Survey" ToRole="SurveyQuestion" />
+        </EntityType>
+        <EntityType Name="SurveyQuestion">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Choice1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Choice2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Choice3" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Choice4" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Answer" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserQuestionDetails" Relationship="CampaignModel.FK_UserQuestionDetails_SurveyQuestions" FromRole="SurveyQuestion" ToRole="UserQuestionDetail" />
+        </EntityType>
+        <EntityType Name="ClientLicense">
+          <Key>
+            <PropertyRef Name="LicenseId" />
+            <PropertyRef Name="ClientId" />
+            <PropertyRef Name="ActiveDate" />
+            <PropertyRef Name="ExpiryDate" />
+          </Key>
+          <Property Name="LicenseId" Type="Int32" Nullable="false" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="ActiveDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_Survey_Campaign">
+          <End Type="CampaignModel.Campaign" Role="Campaign" Multiplicity="1" />
+          <End Type="CampaignModel.Survey" Role="Survey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campaign">
+              <PropertyRef Name="CampaignId" />
+            </Principal>
+            <Dependent Role="Survey">
+              <PropertyRef Name="CampaignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CampaignUser_CampaignRole">
+          <End Type="CampaignModel.CampaignRole" Role="CampaignRole" Multiplicity="1" />
+          <End Type="CampaignModel.CampaignUser" Role="CampaignUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaignRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="CampaignUser">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CampaignUser_Group">
+          <End Type="CampaignModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="CampaignModel.CampaignUser" Role="CampaignUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="CampaignUser">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SurveyQuestions_Survey">
+          <End Type="CampaignModel.Survey" Role="Survey" Multiplicity="1" />
+          <End Type="CampaignModel.SurveyQuestion" Role="SurveyQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="SurveyQuestion">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PublishedCampaign">
+          <Key>
+            <PropertyRef Name="PublishId" />
+          </Key>
+          <Property Name="PublishId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CampaignId" Type="Int32" Nullable="false" />
+          <Property Name="GroupId" Type="Int32" />
+          <Property Name="PublishedBy" Type="Int32" Nullable="false" />
+          <Property Name="PublishedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CampaignUser" Relationship="CampaignModel.FK_PublishedCampaign_CampaignUser" FromRole="PublishedCampaign" ToRole="CampaignUser" />
+          <NavigationProperty Name="Group" Relationship="CampaignModel.FK_PublishedCampaign_Group" FromRole="PublishedCampaign" ToRole="Group" />
+        </EntityType>
+        <Association Name="FK_PublishedCampaign_Campaign">
+          <End Type="CampaignModel.Campaign" Role="Campaign" Multiplicity="1" />
+          <End Type="CampaignModel.PublishedCampaign" Role="PublishedCampaign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campaign">
+              <PropertyRef Name="CampaignId" />
+            </Principal>
+            <Dependent Role="PublishedCampaign">
+              <PropertyRef Name="CampaignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PublishedCampaign_CampaignUser">
+          <End Type="CampaignModel.CampaignUser" Role="CampaignUser" Multiplicity="1" />
+          <End Type="CampaignModel.PublishedCampaign" Role="PublishedCampaign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaignUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="PublishedCampaign">
+              <PropertyRef Name="PublishedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PublishedCampaign_Group">
+          <End Type="CampaignModel.Group" Role="Group" Multiplicity="0..1" />
+          <End Type="CampaignModel.PublishedCampaign" Role="PublishedCampaign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="PublishedCampaign">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserQuestionDetail">
+          <Key>
+            <PropertyRef Name="DetailId" />
+          </Key>
+          <Property Name="DetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="SelectedChoice" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsCorrect" Type="Boolean" />
+          <Property Name="TimeTaken" Type="Time" Precision="7" />
+        </EntityType>
+        <Association Name="FK_UserQuestionDetails_CampaignUser">
+          <End Type="CampaignModel.CampaignUser" Role="CampaignUser" Multiplicity="1" />
+          <End Type="CampaignModel.UserQuestionDetail" Role="UserQuestionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaignUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserQuestionDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserQuestionDetails_SurveyQuestions">
+          <End Type="CampaignModel.SurveyQuestion" Role="SurveyQuestion" Multiplicity="1" />
+          <End Type="CampaignModel.UserQuestionDetail" Role="UserQuestionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveyQuestion">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="UserQuestionDetail">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserCampaign">
+          <Key>
+            <PropertyRef Name="UserCampaignId" />
+          </Key>
+          <Property Name="UserCampaignId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CampaignId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="ViewDate" Type="DateTime" Precision="3" />
+          <Property Name="VideoWatched" Type="Boolean" />
+          <Property Name="VideoTime" Type="Time" Precision="7" />
+          <Property Name="VideoDate" Type="DateTime" Precision="3" />
+          <Property Name="CompletedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Campaign" Relationship="CampaignModel.FK_UserCampaigns_Campaign" FromRole="UserCampaign" ToRole="Campaign" />
+        </EntityType>
+        <Association Name="FK_UserCampaigns_Campaign">
+          <End Type="CampaignModel.Campaign" Role="Campaign" Multiplicity="1" />
+          <End Type="CampaignModel.UserCampaign" Role="UserCampaign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campaign">
+              <PropertyRef Name="CampaignId" />
+            </Principal>
+            <Dependent Role="UserCampaign">
+              <PropertyRef Name="CampaignId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCampaigns_CampaignUser">
+          <End Type="CampaignModel.CampaignUser" Role="CampaignUser" Multiplicity="1" />
+          <End Type="CampaignModel.UserCampaign" Role="UserCampaign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaignUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserCampaign">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCampaigns_Group">
+          <End Type="CampaignModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="CampaignModel.UserCampaign" Role="UserCampaign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="UserCampaign">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Video">
+          <Key>
+            <PropertyRef Name="VideoId" />
+          </Key>
+          <Property Name="VideoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VideoName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="VideoPath" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="FileName" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="VideoLength" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Campaign_Video">
+          <End Type="CampaignModel.Video" Role="Video" Multiplicity="0..1" />
+          <End Type="CampaignModel.Campaign" Role="Campaign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Video">
+              <PropertyRef Name="VideoId" />
+            </Principal>
+            <Dependent Role="Campaign">
+              <PropertyRef Name="VideoLink" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CampaignModelStoreContainer" CdmEntityContainer="CampaignEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="CampaignModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Campaigns">
+            <EntityTypeMapping TypeName="CampaignModel.Campaign">
+              <MappingFragment StoreEntitySet="Campaign">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="VideoDetails" ColumnName="VideoDetails" />
+                <ScalarProperty Name="VideoLink" ColumnName="VideoLink" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="ReferenceId" ColumnName="ReferenceId" />
+                <ScalarProperty Name="CampaignName" ColumnName="CampaignName" />
+                <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CampaignRoles">
+            <EntityTypeMapping TypeName="CampaignModel.CampaignRole">
+              <MappingFragment StoreEntitySet="CampaignRole">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CampaignUsers">
+            <EntityTypeMapping TypeName="CampaignModel.CampaignUser">
+              <MappingFragment StoreEntitySet="CampaignUser">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="CampaignModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ClientType" ColumnName="ClientType" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="CampaignModel.Group">
+              <MappingFragment StoreEntitySet="Group">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Licenses">
+            <EntityTypeMapping TypeName="CampaignModel.License">
+              <MappingFragment StoreEntitySet="License">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="LicenseName" ColumnName="LicenseName" />
+                <ScalarProperty Name="LicenseId" ColumnName="LicenseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Surveys">
+            <EntityTypeMapping TypeName="CampaignModel.Survey">
+              <MappingFragment StoreEntitySet="Survey">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
+                <ScalarProperty Name="SurveyName" ColumnName="SurveyName" />
+                <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SurveyQuestions">
+            <EntityTypeMapping TypeName="CampaignModel.SurveyQuestion">
+              <MappingFragment StoreEntitySet="SurveyQuestions">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="Choice4" ColumnName="Choice4" />
+                <ScalarProperty Name="Choice3" ColumnName="Choice3" />
+                <ScalarProperty Name="Choice2" ColumnName="Choice2" />
+                <ScalarProperty Name="Choice1" ColumnName="Choice1" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientLicenses">
+            <EntityTypeMapping TypeName="CampaignModel.ClientLicense">
+              <MappingFragment StoreEntitySet="ClientLicense">
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="ActiveDate" ColumnName="ActiveDate" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="LicenseId" ColumnName="LicenseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PublishedCampaigns">
+            <EntityTypeMapping TypeName="CampaignModel.PublishedCampaign">
+              <MappingFragment StoreEntitySet="PublishedCampaign">
+                <ScalarProperty Name="PublishedDate" ColumnName="PublishedDate" />
+                <ScalarProperty Name="PublishedBy" ColumnName="PublishedBy" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
+                <ScalarProperty Name="PublishId" ColumnName="PublishId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserQuestionDetails">
+            <EntityTypeMapping TypeName="CampaignModel.UserQuestionDetail">
+              <MappingFragment StoreEntitySet="UserQuestionDetails">
+                <ScalarProperty Name="TimeTaken" ColumnName="TimeTaken" />
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="SelectedChoice" ColumnName="SelectedChoice" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="DetailId" ColumnName="DetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserCampaigns">
+            <EntityTypeMapping TypeName="CampaignModel.UserCampaign">
+              <MappingFragment StoreEntitySet="UserCampaigns">
+                <ScalarProperty Name="CompletedDate" ColumnName="CompletedDate" />
+                <ScalarProperty Name="VideoDate" ColumnName="VideoDate" />
+                <ScalarProperty Name="VideoTime" ColumnName="VideoTime" />
+                <ScalarProperty Name="VideoWatched" ColumnName="VideoWatched" />
+                <ScalarProperty Name="ViewDate" ColumnName="ViewDate" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CampaignId" ColumnName="CampaignId" />
+                <ScalarProperty Name="UserCampaignId" ColumnName="UserCampaignId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Videos">
+            <EntityTypeMapping TypeName="CampaignModel.Video">
+              <MappingFragment StoreEntitySet="Video">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="VideoLength" ColumnName="VideoLength" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="VideoPath" ColumnName="VideoPath" />
+                <ScalarProperty Name="VideoName" ColumnName="VideoName" />
+                <ScalarProperty Name="VideoId" ColumnName="VideoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

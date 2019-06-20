@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="94fa0fb2308441c4974cb5e25ab138d7" Name="Diagram1">
+        <EntityTypeShape EntityType="CampaignModel.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CampaignModel.Campaign" Width="1.5" PointX="3" PointY="6.25" />
+        <EntityTypeShape EntityType="CampaignModel.CampaignRole" Width="1.5" PointX="0.75" PointY="1.75" />
+        <EntityTypeShape EntityType="CampaignModel.CampaignUser" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="CampaignModel.Client" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CampaignModel.Group" Width="1.5" PointX="0.75" PointY="5.875" />
+        <EntityTypeShape EntityType="CampaignModel.License" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="CampaignModel.Survey" Width="1.5" PointX="5.25" PointY="6.5" />
+        <EntityTypeShape EntityType="CampaignModel.SurveyQuestion" Width="1.5" PointX="7.5" PointY="6.25" />
+        <EntityTypeShape EntityType="CampaignModel.ClientLicense" Width="1.5" PointX="9.75" PointY="3.75" />
+        <AssociationConnector Association="CampaignModel.FK_Survey_Campaign" />
+        <AssociationConnector Association="CampaignModel.FK_CampaignUser_CampaignRole" />
+        <AssociationConnector Association="CampaignModel.FK_CampaignUser_Group" />
+        <AssociationConnector Association="CampaignModel.FK_SurveyQuestions_Survey" />
+        <EntityTypeShape EntityType="CampaignModel.PublishedCampaign" Width="1.5" PointX="5.25" PointY="10.125" />
+        <AssociationConnector Association="CampaignModel.FK_PublishedCampaign_Campaign" />
+        <AssociationConnector Association="CampaignModel.FK_PublishedCampaign_CampaignUser" />
+        <AssociationConnector Association="CampaignModel.FK_PublishedCampaign_Group" />
+        <EntityTypeShape EntityType="CampaignModel.UserQuestionDetail" Width="1.5" PointX="9.75" PointY="6.875" />
+        <AssociationConnector Association="CampaignModel.FK_UserQuestionDetails_CampaignUser" />
+        <AssociationConnector Association="CampaignModel.FK_UserQuestionDetails_SurveyQuestions" />
+        <EntityTypeShape EntityType="CampaignModel.UserCampaign" Width="1.5" PointX="5.25" PointY="1.75" />
+        <AssociationConnector Association="CampaignModel.FK_UserCampaigns_Campaign" />
+        <AssociationConnector Association="CampaignModel.FK_UserCampaigns_CampaignUser" />
+        <AssociationConnector Association="CampaignModel.FK_UserCampaigns_Group" />
+        <EntityTypeShape EntityType="CampaignModel.Video" Width="1.5" PointX="0.75" PointY="8.625" />
+        <AssociationConnector Association="CampaignModel.FK_Campaign_Video" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
