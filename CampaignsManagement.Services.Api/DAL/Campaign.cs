@@ -18,6 +18,7 @@ namespace CampaignsManagement.Services.Api.DAL
         public Campaign()
         {
             this.Surveys = new HashSet<Survey>();
+            this.PublishedCampaign = new HashSet<PublishedCampaign>();
         }
     
         public int CampaignId { get; set; }
@@ -33,5 +34,7 @@ namespace CampaignsManagement.Services.Api.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Survey> Surveys { get; set; }
         public virtual Video Video { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PublishedCampaign> PublishedCampaign { get; set; }
     }
 }

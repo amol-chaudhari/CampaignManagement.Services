@@ -150,6 +150,7 @@ warning 6002: The table/view 'Campaign.dbo.ClientLicense' does not have a primar
           <Property Name="DetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QuestionId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Skipped" Type="bit" />
           <Property Name="SelectedChoice" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsCorrect" Type="bit" />
           <Property Name="TimeTaken" Type="time" Precision="7" />
@@ -440,15 +441,6 @@ warning 6002: The table/view 'Campaign.dbo.ClientLicense' does not have a primar
             <End Role="Group" EntitySet="Groups" />
             <End Role="PublishedCampaign" EntitySet="PublishedCampaigns" />
           </AssociationSet>
-          <EntitySet Name="UserQuestionDetails" EntityType="CampaignModel.UserQuestionDetail" />
-          <AssociationSet Name="FK_UserQuestionDetails_CampaignUser" Association="CampaignModel.FK_UserQuestionDetails_CampaignUser">
-            <End Role="CampaignUser" EntitySet="CampaignUsers" />
-            <End Role="UserQuestionDetail" EntitySet="UserQuestionDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserQuestionDetails_SurveyQuestions" Association="CampaignModel.FK_UserQuestionDetails_SurveyQuestions">
-            <End Role="SurveyQuestion" EntitySet="SurveyQuestions" />
-            <End Role="UserQuestionDetail" EntitySet="UserQuestionDetails" />
-          </AssociationSet>
           <EntitySet Name="UserCampaigns" EntityType="CampaignModel.UserCampaign" />
           <AssociationSet Name="FK_UserCampaigns_Campaign" Association="CampaignModel.FK_UserCampaigns_Campaign">
             <End Role="Campaign" EntitySet="Campaigns" />
@@ -466,6 +458,15 @@ warning 6002: The table/view 'Campaign.dbo.ClientLicense' does not have a primar
           <AssociationSet Name="FK_Campaign_Video" Association="CampaignModel.FK_Campaign_Video">
             <End Role="Video" EntitySet="Videos" />
             <End Role="Campaign" EntitySet="Campaigns" />
+          </AssociationSet>
+          <EntitySet Name="UserQuestionDetails" EntityType="CampaignModel.UserQuestionDetail" />
+          <AssociationSet Name="FK_UserQuestionDetails_CampaignUser" Association="CampaignModel.FK_UserQuestionDetails_CampaignUser">
+            <End Role="CampaignUser" EntitySet="CampaignUsers" />
+            <End Role="UserQuestionDetail" EntitySet="UserQuestionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserQuestionDetails_SurveyQuestions" Association="CampaignModel.FK_UserQuestionDetails_SurveyQuestions">
+            <End Role="SurveyQuestion" EntitySet="SurveyQuestions" />
+            <End Role="UserQuestionDetail" EntitySet="UserQuestionDetails" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
@@ -493,6 +494,7 @@ warning 6002: The table/view 'Campaign.dbo.ClientLicense' does not have a primar
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Surveys" Relationship="CampaignModel.FK_Survey_Campaign" FromRole="Campaign" ToRole="Survey" />
           <NavigationProperty Name="Video" Relationship="CampaignModel.FK_Campaign_Video" FromRole="Campaign" ToRole="Video" />
+          <NavigationProperty Name="PublishedCampaign" Relationship="CampaignModel.FK_PublishedCampaign_Campaign" FromRole="Campaign" ToRole="PublishedCampaign" />
         </EntityType>
         <EntityType Name="CampaignRole">
           <Key>
@@ -517,8 +519,6 @@ warning 6002: The table/view 'Campaign.dbo.ClientLicense' does not have a primar
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CampaignRole" Relationship="CampaignModel.FK_CampaignUser_CampaignRole" FromRole="CampaignUser" ToRole="CampaignRole" />
-          <NavigationProperty Name="Group" Relationship="CampaignModel.FK_CampaignUser_Group" FromRole="CampaignUser" ToRole="Group" />
-          <NavigationProperty Name="PublishedCampaigns" Relationship="CampaignModel.FK_PublishedCampaign_CampaignUser" FromRole="CampaignUser" ToRole="PublishedCampaign" />
           <NavigationProperty Name="UserQuestionDetails" Relationship="CampaignModel.FK_UserQuestionDetails_CampaignUser" FromRole="CampaignUser" ToRole="UserQuestionDetail" />
         </EntityType>
         <EntityType Name="Client">
@@ -647,7 +647,6 @@ warning 6002: The table/view 'Campaign.dbo.ClientLicense' does not have a primar
           <Property Name="PublishedBy" Type="Int32" Nullable="false" />
           <Property Name="PublishedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="CampaignUser" Relationship="CampaignModel.FK_PublishedCampaign_CampaignUser" FromRole="PublishedCampaign" ToRole="CampaignUser" />
-          <NavigationProperty Name="Group" Relationship="CampaignModel.FK_PublishedCampaign_Group" FromRole="PublishedCampaign" ToRole="Group" />
         </EntityType>
         <Association Name="FK_PublishedCampaign_Campaign">
           <End Type="CampaignModel.Campaign" Role="Campaign" Multiplicity="1" />
@@ -682,41 +681,6 @@ warning 6002: The table/view 'Campaign.dbo.ClientLicense' does not have a primar
             </Principal>
             <Dependent Role="PublishedCampaign">
               <PropertyRef Name="GroupId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="UserQuestionDetail">
-          <Key>
-            <PropertyRef Name="DetailId" />
-          </Key>
-          <Property Name="DetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuestionId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="SelectedChoice" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="IsCorrect" Type="Boolean" />
-          <Property Name="TimeTaken" Type="Time" Precision="7" />
-        </EntityType>
-        <Association Name="FK_UserQuestionDetails_CampaignUser">
-          <End Type="CampaignModel.CampaignUser" Role="CampaignUser" Multiplicity="1" />
-          <End Type="CampaignModel.UserQuestionDetail" Role="UserQuestionDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CampaignUser">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="UserQuestionDetail">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserQuestionDetails_SurveyQuestions">
-          <End Type="CampaignModel.SurveyQuestion" Role="SurveyQuestion" Multiplicity="1" />
-          <End Type="CampaignModel.UserQuestionDetail" Role="UserQuestionDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SurveyQuestion">
-              <PropertyRef Name="QuestionId" />
-            </Principal>
-            <Dependent Role="UserQuestionDetail">
-              <PropertyRef Name="QuestionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -791,6 +755,42 @@ warning 6002: The table/view 'Campaign.dbo.ClientLicense' does not have a primar
             </Principal>
             <Dependent Role="Campaign">
               <PropertyRef Name="VideoLink" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserQuestionDetail">
+          <Key>
+            <PropertyRef Name="DetailId" />
+          </Key>
+          <Property Name="DetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Skipped" Type="Boolean" />
+          <Property Name="SelectedChoice" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsCorrect" Type="Boolean" />
+          <Property Name="TimeTaken" Type="Time" Precision="7" />
+        </EntityType>
+        <Association Name="FK_UserQuestionDetails_CampaignUser">
+          <End Type="CampaignModel.CampaignUser" Role="CampaignUser" Multiplicity="1" />
+          <End Type="CampaignModel.UserQuestionDetail" Role="UserQuestionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaignUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserQuestionDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserQuestionDetails_SurveyQuestions">
+          <End Type="CampaignModel.SurveyQuestion" Role="SurveyQuestion" Multiplicity="1" />
+          <End Type="CampaignModel.UserQuestionDetail" Role="UserQuestionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveyQuestion">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="UserQuestionDetail">
+              <PropertyRef Name="QuestionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -929,18 +929,6 @@ warning 6002: The table/view 'Campaign.dbo.ClientLicense' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserQuestionDetails">
-            <EntityTypeMapping TypeName="CampaignModel.UserQuestionDetail">
-              <MappingFragment StoreEntitySet="UserQuestionDetails">
-                <ScalarProperty Name="TimeTaken" ColumnName="TimeTaken" />
-                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
-                <ScalarProperty Name="SelectedChoice" ColumnName="SelectedChoice" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
-                <ScalarProperty Name="DetailId" ColumnName="DetailId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserCampaigns">
             <EntityTypeMapping TypeName="CampaignModel.UserCampaign">
               <MappingFragment StoreEntitySet="UserCampaigns">
@@ -965,6 +953,19 @@ warning 6002: The table/view 'Campaign.dbo.ClientLicense' does not have a primar
                 <ScalarProperty Name="VideoPath" ColumnName="VideoPath" />
                 <ScalarProperty Name="VideoName" ColumnName="VideoName" />
                 <ScalarProperty Name="VideoId" ColumnName="VideoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserQuestionDetails">
+            <EntityTypeMapping TypeName="CampaignModel.UserQuestionDetail">
+              <MappingFragment StoreEntitySet="UserQuestionDetails">
+                <ScalarProperty Name="TimeTaken" ColumnName="TimeTaken" />
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="SelectedChoice" ColumnName="SelectedChoice" />
+                <ScalarProperty Name="Skipped" ColumnName="Skipped" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="DetailId" ColumnName="DetailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

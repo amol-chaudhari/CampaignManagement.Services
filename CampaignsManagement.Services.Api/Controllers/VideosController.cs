@@ -59,8 +59,7 @@ namespace CampaignsManagement.Services.Api.Controllers
         }
 
         [HttpPost]
-        [Route("file")]
-        [ResponseType(typeof(bool))]
+        [Route("uploadfile")]
         public HttpResponseMessage UploadFile()
         {
             var httpRequest = HttpContext.Current.Request;
@@ -69,14 +68,14 @@ namespace CampaignsManagement.Services.Api.Controllers
                 return ToJson(false);
             }
 
-            foreach (string file in httpRequest.Files)
-            {
-                var postedFile = httpRequest.Files[file];
+            //foreach (string file in httpRequest.Files)
+            //{
+                var postedFile = httpRequest.Files[0];
                 var filePath = HttpContext.Current.Server.MapPath("~/" + postedFile.FileName); //need to provide path for angular app projects folder assests,somehow
                 postedFile.SaveAs(filePath);
-            }
+            //}
 
-            return ToJson(true);
+            return ToJson(new { Response = true, FileName = postedFile.FileName});
         }
 
         protected override void Dispose(bool disposing)

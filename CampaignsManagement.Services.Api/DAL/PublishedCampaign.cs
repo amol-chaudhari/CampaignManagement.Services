@@ -21,6 +21,5 @@ namespace CampaignsManagement.Services.Api.DAL
         public Nullable<System.DateTime> PublishedDate { get; set; }
     
         public virtual CampaignUser CampaignUser { get; set; }
-        public virtual Group Group { get; set; }
     }
 }

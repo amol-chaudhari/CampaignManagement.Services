@@ -17,6 +17,7 @@ namespace CampaignsManagement.Services.Api.DAL
         public int DetailId { get; set; }
         public int QuestionId { get; set; }
         public int UserId { get; set; }
+        public Nullable<bool> Skipped { get; set; }
         public string SelectedChoice { get; set; }
         public Nullable<bool> IsCorrect { get; set; }
         public Nullable<System.TimeSpan> TimeTaken { get; set; }

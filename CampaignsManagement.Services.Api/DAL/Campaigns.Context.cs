@@ -36,8 +36,8 @@ namespace CampaignsManagement.Services.Api.DAL
         public virtual DbSet<SurveyQuestion> SurveyQuestions { get; set; }
         public virtual DbSet<ClientLicense> ClientLicenses { get; set; }
         public virtual DbSet<PublishedCampaign> PublishedCampaigns { get; set; }
-        public virtual DbSet<UserQuestionDetail> UserQuestionDetails { get; set; }
         public virtual DbSet<UserCampaign> UserCampaigns { get; set; }
         public virtual DbSet<Video> Videos { get; set; }
+        public virtual DbSet<UserQuestionDetail> UserQuestionDetails { get; set; }
     }
 }

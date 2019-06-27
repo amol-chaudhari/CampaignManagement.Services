@@ -17,7 +17,6 @@ namespace CampaignsManagement.Services.Api.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CampaignUser()
         {
-            this.PublishedCampaigns = new HashSet<PublishedCampaign>();
             this.UserQuestionDetails = new HashSet<UserQuestionDetail>();
         }
     
@@ -33,9 +32,6 @@ namespace CampaignsManagement.Services.Api.DAL
         public bool Active { get; set; }
     
         public virtual CampaignRole CampaignRole { get; set; }
-        public virtual Group Group { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PublishedCampaign> PublishedCampaigns { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserQuestionDetail> UserQuestionDetails { get; set; }
     }

@@ -23,15 +23,15 @@
         <AssociationConnector Association="CampaignModel.FK_PublishedCampaign_Campaign" />
         <AssociationConnector Association="CampaignModel.FK_PublishedCampaign_CampaignUser" />
         <AssociationConnector Association="CampaignModel.FK_PublishedCampaign_Group" />
-        <EntityTypeShape EntityType="CampaignModel.UserQuestionDetail" Width="1.5" PointX="9.75" PointY="6.875" />
-        <AssociationConnector Association="CampaignModel.FK_UserQuestionDetails_CampaignUser" />
-        <AssociationConnector Association="CampaignModel.FK_UserQuestionDetails_SurveyQuestions" />
         <EntityTypeShape EntityType="CampaignModel.UserCampaign" Width="1.5" PointX="5.25" PointY="1.75" />
         <AssociationConnector Association="CampaignModel.FK_UserCampaigns_Campaign" />
         <AssociationConnector Association="CampaignModel.FK_UserCampaigns_CampaignUser" />
         <AssociationConnector Association="CampaignModel.FK_UserCampaigns_Group" />
         <EntityTypeShape EntityType="CampaignModel.Video" Width="1.5" PointX="0.75" PointY="8.625" />
         <AssociationConnector Association="CampaignModel.FK_Campaign_Video" />
+        <EntityTypeShape EntityType="CampaignModel.UserQuestionDetail" Width="1.5" PointX="9.75" PointY="6.875" />
+        <AssociationConnector Association="CampaignModel.FK_UserQuestionDetails_CampaignUser" />
+        <AssociationConnector Association="CampaignModel.FK_UserQuestionDetails_SurveyQuestions" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

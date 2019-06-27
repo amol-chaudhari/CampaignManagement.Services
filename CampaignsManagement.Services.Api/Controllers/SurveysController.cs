@@ -95,8 +95,44 @@ namespace CampaignsManagement.Services.Api.Controllers
             var result = new { Succeeded = outcome, List = db.SurveyQuestions.Where(d => d.SurveyId == question.SurveyId).AsEnumerable() };
             return ToJson(result);
         }
-        
 
+        [HttpPost]
+        [Route("submitsurvey")]
+        [ResponseType(typeof(bool))]
+        public HttpResponseMessage SubmitSurvey([FromBody]UserQuestionDetail[] userAnswers)
+        {
+            var ac = new AccountController();
+            var question = new SurveyQuestion();
+            var surveyId = 0;
+
+            foreach (var answer in userAnswers)
+            {
+                question = db.SurveyQuestions.Find(answer.QuestionId);
+                if(surveyId == 0) surveyId = question.SurveyId;
+
+                db.UserQuestionDetails.Add(new UserQuestionDetail {
+                    QuestionId = answer.QuestionId,
+                    Skipped = answer.Skipped,
+                    SelectedChoice = answer.SelectedChoice,
+                    UserId = ac.LoggedInUser.UserId,
+                    IsCorrect = question != null ? question.Answer.ToLower().Equals(answer.SelectedChoice?.ToLower()) : false
+                });
+            }
+
+            //update user campaign table to mark it completed.
+            var survey = db.Surveys.Find(surveyId);
+            var campaignId = survey?.CampaignId;
+
+            var userCampaign = db.UserCampaigns.FirstOrDefault(d => d.CampaignId == campaignId && d.UserId == ac.LoggedInUser.UserId);
+            userCampaign.VideoDate = DateTime.Now;
+            userCampaign.VideoWatched = true;
+            userCampaign.CompletedDate = DateTime.Now;
+            db.Entry(userCampaign).State = EntityState.Modified;
+
+            var outcome = db.SaveChanges();
+            return ToJson(outcome);
+        }
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

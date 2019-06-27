@@ -120,3 +120,28 @@ namespace CampaignsManagement.Services.Api.Controllers
         }
     }
 }
+
+
+
+//public class Vehile
+//{
+//    public int s { get; set; }
+//}
+
+//public class Car : Vehile
+//{
+//}
+
+//public class Pr { public int x { get; set; } }
+
+//class PRogram
+//{
+//    static int getx()
+//    {
+//        object f = new Car { s = 10 };
+//        object j = new Pr { x = 10 };
+
+//        Vehile c = (Vehile)f;
+
+//    }
+//}
